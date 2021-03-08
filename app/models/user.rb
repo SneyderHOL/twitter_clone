@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  has_many :tweets, dependent: :destroy
   # VALID_USERNAME_REGEX = /\A[\w]+\z/
   validates :username, presence: true,
             uniqueness: { case_sensitive: false },

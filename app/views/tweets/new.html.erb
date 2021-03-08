@@ -1,0 +1,8 @@
+<h1>Create a new tweet</h1>
+
+<%= render 'shared/errors', obj: @tweet %>
+<%= form_with(model: @tweet, local:true) do |f| %>
+  <%= f.label :message %><br>
+  <%= f.text_area :message, rows: 9 %><br>
+  <%= f.submit 'Post' %>
+<% end %>

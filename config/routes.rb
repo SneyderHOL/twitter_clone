@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get ':username', to: 'users#show', as: :user
   resources :users, only: [:show]
+  resources :tweets, only: [:new, :create]
 end
