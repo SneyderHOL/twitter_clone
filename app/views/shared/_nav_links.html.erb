@@ -1,4 +1,5 @@
 <% if user_signed_in? %>
+  <small><%= current_user.username %></small>
   <%= link_to "Home", user_path(current_user.username) %>
   <%= link_to "[Edit account]", edit_user_registration_path %>
   <%= link_to '[Sign Out]', destroy_user_session_path, method: :delete %>
