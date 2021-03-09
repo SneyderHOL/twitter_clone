@@ -1,1 +1,17 @@
-<h1><%= current_user.username %> Home page</h1>
+<h1><%= @user.username %>'s Tweets page</h1>
+<% if @user.tweets %>
+  <% @user.tweets.reverse.each do |tweet| %>
+    <div>
+      <div>
+        <small><%= tweet.user.fullname %></small>
+        <small><%= tweet.user.username %></small>
+        <small><%= time_ago_in_words(tweet.created_at) %> ago</small>
+      </div>
+      <div>
+        <%= simple_format(tweet.message) %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <span>This user doesn't have tweets yet!</span>
+<% end %>

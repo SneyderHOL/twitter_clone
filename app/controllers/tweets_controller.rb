@@ -1,4 +1,6 @@
 class TweetsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @tweet = Tweet.new
   end
@@ -12,8 +14,5 @@ class TweetsController < ApplicationController
     else
       render 'new'
     end
-  end
-
-  def index
   end
 end
