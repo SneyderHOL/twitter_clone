@@ -12,4 +12,5 @@ class User < ApplicationRecord
   validates :fullname, presence: true,
             uniqueness: { case_sensitive: false },
             length: { maximum: 140 }
+  
 end

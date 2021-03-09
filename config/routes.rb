@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'home#index'
-  get ':username', to: 'users#show', as: :user
-  resources :users, only: [:show]
+  get ':username', to: 'users#home', as: :user
+  get ':username/tweets', to: 'users#show', as: :user_tweets
+  # resources :users, only: [:show]
   resources :tweets, only: [:new, :create]
 end
