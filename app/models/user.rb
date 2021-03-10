@@ -12,5 +12,9 @@ class User < ApplicationRecord
   validates :fullname, presence: true,
             uniqueness: { case_sensitive: false },
             length: { maximum: 140 }
+  has_many :followers_on_list, foreign_key: "followee_id", class_name: "Follow", dependent: :destroy
+  has_many :followers, through: :followers_on_list
   
+  has_many :followees_on_list, foreign_key: "follower_id", class_name: "Follow", dependent: :destroy
+  has_many :followees, through: :followees_on_list
 end

@@ -1,0 +1,7 @@
+<h1>Followers page</h1>
+
+<div>
+  <%= will_paginate @followers, :container => false %>
+</div>
+
+<%= render 'user_list', obj: @followers, to_follow: true %>

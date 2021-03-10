@@ -1,0 +1,7 @@
+<h1>Follow another user</h1>
+
+<%= form_with(url: to_follow_user_path, local:true) do |f| %>
+  <%= f.label :followee, "User to follow" %><br>
+  <%= f.text_field :followee %><br>
+  <%= f.submit '[Follow user]' %>
+<% end %>

@@ -1,1 +1,10 @@
 <h1><%= @user.username %>'s Home page</h1>
+<% followees_count = @user.followees.count %>
+<% followers_count = @user.followers.count %>
+<% if user_signed_in? %>
+  <%= link_to "#{followees_count} followees", user_followees_path(@user.username) %>
+  <%= link_to "#{followers_count} followers", user_followers_path(@user.username) %>
+<% else %>
+  <small><%= followees_count %> followees</small>
+  <small><%= followers_count %> followers</small>
+<% end %>
