@@ -1,8 +1,8 @@
 <% obj.each do |subject| %>
   <div>
     <div>
-      <small><%= link_to "#{ subject.fullname } (@#{ subject.username })", user_tweets_path(subject.username) %></small>
-      <% if to_follow %>
+      <small><%= link_to "#{ subject.fullname } (@#{ subject.username })", user_path(subject.username) %></small>
+      <% unless current_user.followees.include?(subject) || current_user == subject %>
         <small><%= link_to 'Follow', root_path %></small>
       <% end %>
     </div>

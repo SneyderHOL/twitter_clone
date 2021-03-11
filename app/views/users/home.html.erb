@@ -4,7 +4,15 @@
 <% if user_signed_in? %>
   <%= link_to "#{followees_count} followees", user_followees_path(@user.username) %>
   <%= link_to "#{followers_count} followers", user_followers_path(@user.username) %>
+  <% unless current_user.followees.include?(@user) || current_user == @user %>
+    <%= link_to 'Follow', root_path %>
+  <% end %>
 <% else %>
   <small><%= followees_count %> followees</small>
   <small><%= followers_count %> followers</small>
 <% end %>
+<div>
+  <%= will_paginate @user_tweets, :container => false %>
+</div>
+
+<%= render 'tweets/tweet', obj: @user_tweets %>

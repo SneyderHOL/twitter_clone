@@ -6,13 +6,19 @@ class TweetsController < ApplicationController
   end
 
   def create
-    @tweet = Tweet.new(params.require(:tweet).permit(:message))
+    @tweet = Tweet.new(tweet_params)
     @tweet.user = current_user
     if @tweet.save
       flash[:notice] = "Your tweet was successfully saved"
-      redirect_to root_path
+      redirect_to user_path(current_user.username)
     else
       render 'new'
     end
+  end
+
+  private
+
+  def tweet_params
+    params.require(:tweet).permit(:message)
   end
 end

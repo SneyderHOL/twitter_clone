@@ -1,17 +1,13 @@
 class UsersController < ApplicationController
-  # before_action :authenticate_user!, only: :home
-  def show
-    @user = User.find_by(username: params[:username])
-    if @user
-      @user_tweets = @user.tweets.page(params[:page]).order('created_at DESC')
-    else
-      render 'shared/not_found'
-    end
-  end
-
+  before_action :authenticate_user!
   def home
     @user = User.find_by(username: params[:username])
-    unless @user
+    if @user && @user == current_user
+      # @user_tweets = @user.tweets.page(params[:page]).order('created_at DESC')
+      @user_tweets = get_tweets.paginate(page: params[:page], per_page: 10)
+    elsif @user
+      @user_tweets = @user.tweets.page(params[:page]).order('created_at DESC')
+    else
       render 'shared/not_found'
     end
   end
@@ -43,7 +39,7 @@ class UsersController < ApplicationController
     unless @user
       render 'shared/not_found'
     end
-    @followees = @user.followees.page(params[:page]).order('fullname DESC')
+    @followees = @user.followees.page(params[:page]).order('fullname ASC')
   end
 
   def followers
@@ -51,6 +47,18 @@ class UsersController < ApplicationController
     unless @user
       render 'shared/not_found'
     end
-    @followers = @user.followers.page(params[:page]).order('fullname DESC')
+    @followers = @user.followers.page(params[:page]).order('fullname ASC')
+  end
+
+  private
+
+  def get_tweets
+    tweets = @user.tweets.dup
+    unless @user.followees.empty?
+      @user.followees.each do |subject|
+        tweets += subject.tweets.dup
+      end
+    end
+    tweets.sort_by { |t| t.created_at }.reverse
   end
 end

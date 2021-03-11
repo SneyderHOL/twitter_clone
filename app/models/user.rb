@@ -9,9 +9,7 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false },
             length: { minimum: 3, maximum: 25 }
   # VALID_FULLNAME_REGEX = /\A[a-zA-Z ]+\z/
-  validates :fullname, presence: true,
-            uniqueness: { case_sensitive: false },
-            length: { maximum: 140 }
+  validates :fullname, presence: true, length: { maximum: 140 }
   has_many :followers_on_list, foreign_key: "followee_id", class_name: "Follow", dependent: :destroy
   has_many :followers, through: :followers_on_list
   

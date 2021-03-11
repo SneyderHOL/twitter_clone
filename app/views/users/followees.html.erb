@@ -1,9 +1,11 @@
 <h1>Followees page</h1>
 
-<%= link_to "[Follow another user]", follow_user_path %>
+<% if @user == current_user %>
+  <%= link_to "[Follow another user]", follow_user_path %>
+<% end %>
 
 <div>
   <%= will_paginate @followees, :container => false %>
 </div>
 
-<%= render 'user_list', { obj: @followees, to_follow: false } %>
+<%= render 'user_list', { obj: @followees } %>

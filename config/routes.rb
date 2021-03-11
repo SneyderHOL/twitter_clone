@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'home#index'
   get ':username', to: 'users#home', as: :user
-  get ':username/tweets', to: 'users#show', as: :user_tweets
+  # get ':username/tweets', to: 'users#show', as: :user_tweets
   get ':username/followees', to: 'users#followees', as: :user_followees
   get ':username/followers', to: 'users#followers', as: :user_followers
   get ':username/follow', to: 'users#follow', as: :follow_user
