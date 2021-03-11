@@ -38,16 +38,18 @@ class UsersController < ApplicationController
     @user = User.find_by(username: params[:username])
     unless @user
       render 'shared/not_found'
+      return
     end
-    @followees = @user.followees.page(params[:page]).order('fullname ASC')
+    @followees = sort_subjects(@user.followees).paginate(page: params[:page], per_page: 10)
   end
 
   def followers
     @user = User.find_by(username: params[:username])
     unless @user
       render 'shared/not_found'
+      return
     end
-    @followers = @user.followers.page(params[:page]).order('fullname ASC')
+    @followers = sort_subjects(@user.followers).paginate(page: params[:page], per_page: 10)
   end
 
   private
@@ -60,5 +62,11 @@ class UsersController < ApplicationController
       end
     end
     tweets.sort_by { |t| t.created_at }.reverse
+  end
+
+  def sort_subjects(subjects)
+    subjects.sort { |subject_one, subject_two|
+      subject_one.fullname.downcase <=> subject_two.fullname.downcase
+    }
   end
 end
