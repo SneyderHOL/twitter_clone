@@ -5,7 +5,7 @@
   <%= link_to "#{followees_count} followees", user_followees_path(@user.username) %>
   <%= link_to "#{followers_count} followers", user_followers_path(@user.username) %>
   <% unless current_user.followees.include?(@user) || current_user == @user %>
-    <%= link_to 'Follow', to_follow_user_path(current_user.username, followee: @user.username), method: :post %>
+    <%= render 'follow_button', followee: @user %>
   <% end %>
 <% else %>
   <small><%= followees_count %> followees</small>

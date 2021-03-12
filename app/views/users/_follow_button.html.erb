@@ -1,0 +1,4 @@
+<%= form_with(url: to_follow_user_path(current_user.username), local:true, html: { style: "display:inline;" }) do |f| %>
+  <%= hidden_field_tag 'followee', followee.username %>
+  <%= f.submit '[Follow]' %>
+<% end %>
