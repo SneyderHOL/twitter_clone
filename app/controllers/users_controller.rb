@@ -19,14 +19,14 @@ class UsersController < ApplicationController
   def follow_to
     @user = current_user
     @followee = User.find_by(username: params[:followee])
-    # byebug
+    byebug
     if @followee
       if @user.followees.include?(@followee)
         flash.now[:alert] = "You already follow #{ @followee.username }"
         render 'follow'
       else
         follow = Follow.create(follower: @user, followee: @followee)
-        redirect_to user_tweets_path(@followee.username)
+        redirect_to user_path(@followee.username)
       end
     else
       flash.now[:alert] = "The user #{ params[:followee] } does not exists"

@@ -3,7 +3,7 @@
     <div>
       <small><%= link_to "#{ subject.fullname } (@#{ subject.username })", user_path(subject.username) %></small>
       <% unless current_user.followees.include?(subject) || current_user == subject %>
-        <small><%= link_to 'Follow', root_path %></small>
+        <small><%= link_to 'Follow', to_follow_user_path(current_user.username, followee: subject.username), method: :post %></small>
       <% end %>
     </div>
   </div>
