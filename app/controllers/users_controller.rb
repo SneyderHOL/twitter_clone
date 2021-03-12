@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+
   def home
     @user = User.find_by(username: params[:username])
     if @user && @user == current_user
-      # @user_tweets = @user.tweets.page(params[:page]).order('created_at DESC')
       @user_tweets = get_tweets.paginate(page: params[:page], per_page: 10)
     elsif @user
       @user_tweets = @user.tweets.page(params[:page]).order('created_at DESC')
@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   def follow_to
     @user = current_user
     @followee = User.find_by(username: params[:followee])
-    byebug
     if @followee
       if @user.followees.include?(@followee)
         flash.now[:alert] = "You already follow #{ @followee.username }"
