@@ -3,7 +3,7 @@
     <div>
       <small><strong><%= tweet.user.fullname %>, </strong></small>
       <small><%= "@#{ tweet.user.username } - " %></small>
-      <small><%= time_ago_in_words(tweet.created_at) %> ago</small>
+      <small><%= tweet.created_at %></small>
     </div>
     <div>
       <%= simple_format(tweet.message) %>

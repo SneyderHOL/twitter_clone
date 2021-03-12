@@ -4,8 +4,4 @@
   <%= link_to "[Follow another user]", follow_user_path %>
 <% end %>
 
-<div>
-  <%= will_paginate @followees, :container => false %>
-</div>
-
-<%= render 'user_list', { obj: @followees } %>
+<%= render 'subjects_list' %>

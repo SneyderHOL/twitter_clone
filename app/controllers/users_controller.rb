@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_user, only: [:home, :followees, :followers]
+  before_action :set_current_user, only: [:follow, :follow_to]
 
   def home
-    @user = User.find_by(username: params[:username])
     if @user && @user == current_user
       @user_tweets = get_tweets.paginate(page: params[:page], per_page: 10)
     elsif @user
@@ -13,11 +14,9 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @user = current_user
   end
 
   def follow_to
-    @user = current_user
     @followee = User.find_by(username: params[:followee])
     if @followee
       if @user.followees.include?(@followee)
@@ -35,21 +34,13 @@ class UsersController < ApplicationController
   end
 
   def followees
-    @user = User.find_by(username: params[:username])
-    unless @user
-      render 'shared/not_found'
-      return
-    end
-    @followees = sort_subjects(@user.followees).paginate(page: params[:page], per_page: 10)
+    check_for_user
+    set_subjects @user.followees
   end
 
   def followers
-    @user = User.find_by(username: params[:username])
-    unless @user
-      render 'shared/not_found'
-      return
-    end
-    @followers = sort_subjects(@user.followers).paginate(page: params[:page], per_page: 10)
+    check_for_user
+    set_subjects @user.followers
   end
 
   private
@@ -68,5 +59,24 @@ class UsersController < ApplicationController
     subjects.sort { |subject_one, subject_two|
       subject_one.fullname.downcase <=> subject_two.fullname.downcase
     }
+  end
+
+  def set_user
+    @user = User.find_by(username: params[:username])
+  end
+
+  def set_current_user
+    @user = current_user
+  end
+
+  def check_for_user
+    unless @user
+      render 'shared/not_found'
+      return
+    end
+  end
+
+  def set_subjects(subjects_list)
+    @subjects = sort_subjects(subjects_list).paginate(page: params[:page], per_page: 10)
   end
 end
