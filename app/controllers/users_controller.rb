@@ -25,6 +25,7 @@ class UsersController < ApplicationController
         render 'follow'
       else
         follow = Follow.create(follower: @user, followee: @followee)
+        flash[:notice] = "You are now following #{ @followee.username }"
         redirect_to user_path(@followee.username)
       end
     else
