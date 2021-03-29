@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     elsif @user
       @user_tweets = @user.tweets.page(params[:page]).order('created_at DESC')
     else
-      render 'shared/not_found'
+      render_not_found
     end
   end
 
@@ -34,12 +34,18 @@ class UsersController < ApplicationController
   end
 
   def followees
-    check_for_user
+    unless @user
+      render_not_found
+      return
+    end
     set_subjects @user.followees
   end
 
   def followers
-    check_for_user
+    unless @user
+      render_not_found
+      return
+    end
     set_subjects @user.followers
   end
 
@@ -67,13 +73,6 @@ class UsersController < ApplicationController
 
   def set_current_user
     @user = current_user
-  end
-
-  def check_for_user
-    unless @user
-      render 'shared/not_found'
-      return
-    end
   end
 
   def set_subjects(subjects_list)
