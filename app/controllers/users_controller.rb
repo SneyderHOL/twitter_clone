@@ -18,7 +18,14 @@ class UsersController < ApplicationController
 
   def follow_to
     @followee = User.find_by(username: params[:followee])
+
     if @followee
+      if @followee == current_user
+        flash.now[:alert] = "You can't follow yourself"
+        render 'follow'
+        return
+      end
+
       if @user.followees.include?(@followee)
         flash.now[:alert] = "You already follow #{ @followee.username }"
         render 'follow'
